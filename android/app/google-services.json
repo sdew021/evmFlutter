@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "272369424609",
+    "project_id": "evmflutter",
+    "storage_bucket": "evmflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272369424609:android:2861e957eb4535cf433fa0",
+        "android_client_info": {
+          "package_name": "com.blockchain.evmflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272369424609-61epb0m0dqncbn1furccd81tvcipj6d9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByjIYuQKAlXOI7a039dlzRbHe4NL4XDLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272369424609-61epb0m0dqncbn1furccd81tvcipj6d9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

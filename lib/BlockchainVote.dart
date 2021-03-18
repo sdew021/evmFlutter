@@ -31,28 +31,28 @@ class _BlockchainVoteState extends State<BlockchainVote> {
   void initState() {
     super.initState();
     httpClient = new Client();
-    ethClient = new Web3Client('http://localhost:7545', httpClient);
+    ethClient = new Web3Client("http://localhost:7545", httpClient);
   }
 
   Future<DeployedContract> loadContract() async {
     String abiCode = await rootBundle.loadString("assets/abi.json");
-    String contractAddress = "0x34C848C30572c1f29d06B6eb129447C0C1E0e6D1";
+    String toContractAddress = "0xD57a7ef4498f373eB77080681851b62D5dEd5fEb";
 
     final contract = DeployedContract(ContractAbi.fromJson(abiCode, "MetaCoin"),
-        EthereumAddress.fromHex(contractAddress));
+        EthereumAddress.fromHex(toContractAddress));
     return contract;
   }
 
   Future<String> submit(String functionName, List<dynamic> args) async {
-    EthPrivateKey credentials = EthPrivateKey.fromHex(
-        "79d6e3ebd353cd270d39d22573654510d076c50fd08f4a024444bc9e0ae081e2");
+    EthPrivateKey fromCredentials = EthPrivateKey.fromHex(
+        "1bb1e8616fa398ded6ff34c9137da38243901f8b40c91029867900398c779a6b");
 
     DeployedContract contract = await loadContract();
 
     final ethFunction = contract.function(functionName);
 
     var result = await ethClient.sendTransaction(
-      credentials,
+      fromCredentials,
       Transaction.callContract(
         contract: contract,
         function: ethFunction,
@@ -81,11 +81,16 @@ class _BlockchainVoteState extends State<BlockchainVote> {
   }
 
   Future<List<dynamic>> getBalance(String targetAddressHex) async {
-    EthereumAddress address = EthereumAddress.fromHex(targetAddressHex);
-    // getBalance transaction
-    List<dynamic> result = await query("getBalance", [address]);
-    // returns list of results, in this case a list with only the balance
-    return result;
+    // EthereumAddress address = EthereumAddress.fromHex(targetAddressHex);
+    // var result = await query("getBalance", [address]);
+    var apiUrl = "http://localhost:7545"; //Replace with your API
+
+    var httpClient = new Client();
+    var ethClient = new Web3Client(apiUrl, httpClient);
+// You can now call rpc methods. This one will query the amount of Ether you own
+    EtherAmount balance = await ethClient.getBalance(
+        EthereumAddress.fromHex("0x12EE1464c548aF532a2b4709d8467E54a8903c69"));
+    return [balance.getValueInUnit(EtherUnit.ether)];
   }
 
   @override
@@ -99,31 +104,19 @@ class _BlockchainVoteState extends State<BlockchainVote> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FutureBuilder(
-              future: getBalance("0x1dce710dd47849Aa99503f2dD40755256fB9C91e"),
+              future: getBalance("0xD57a7ef4498f373eB77080681851b62D5dEd5fEb"),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Text(
-                      'You have this many MetaCoin ${snapshot.data[0]}');
+                  return Text('You have this many MetaCoin ${snapshot.data}');
                 } else
-                  return Text('Loading...');
+                  return Text('Loading... ${snapshot.data}');
               },
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text('Phone Number: 8310945403'),
-            SizedBox(
-              height: 16,
-            ),
-            Text('Unique Id: 1234567891'),
-            SizedBox(
-              height: 16,
             ),
             ElevatedButton(
               child: Text("Send some MetaCoins"),
               onPressed: () async {
                 var result = await sendCoind(
-                    "0x34C848C30572c1f29d06B6eb129447C0C1E0e6D1", 2);
+                    "0xAC7667CF9e1a1352aaDE2cEB6824e31DeC259930", 2);
                 setState(() {
                   lastTransactionHash = result;
                 });
