@@ -6,7 +6,6 @@
 
 import 'dart:async';
 
-import 'package:evmflutter/Dashboard.dart';
 import 'package:evmflutter/Vote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,11 +27,21 @@ class _FingerprintAuthWidgetState extends State<FingerprintAuthWidget> {
   @override
   void initState() {
     super.initState();
-    auth.isDeviceSupported().then(
-          (isSupported) => setState(() => _supportState = isSupported
-              ? _SupportState.supported
-              : _SupportState.unsupported),
-        );
+    try {
+      auth
+          .isDeviceSupported()
+          .then(
+            (isSupported) => setState(() => _supportState = isSupported
+                ? _SupportState.supported
+                : _SupportState.unsupported),
+          )
+          .onError(
+            (error, stackTrace) =>
+                setState(() => _supportState = _SupportState.unsupported),
+          );
+    } on Exception {
+      setState(() => _supportState = _SupportState.unsupported);
+    }
   }
 
   Future<void> _checkBiometrics() async {
