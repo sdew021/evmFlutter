@@ -1,5 +1,6 @@
-import 'package:evmflutter/Dashboard.dart';
 import 'package:flutter/material.dart';
+
+import 'Home.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Dashboard(),
+      home: Home(),
       //MyHomePage(title: 'Blockchain Voting'),
     );
   }

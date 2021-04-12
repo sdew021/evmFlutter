@@ -58,6 +58,8 @@ class _VoteState extends State<Vote> {
 
   @override
   Widget build(BuildContext context) {
+    bool _authStat = false;
+    var _btntxt = "Authenticate";
     return Scaffold(
       appBar: AppBar(
         title: Text("Vote"),
@@ -133,6 +135,29 @@ class _VoteState extends State<Vote> {
                 ),
               ),
             ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                height: 50,
+                child: ElevatedButton(
+                    onPressed: () {
+                      _authStat = !_authStat;
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (_authStat)
+                            return Colors.green;
+                          else if (!_authStat) return Colors.red;
+                          return null; // Use the component's default.
+                        },
+                      ),
+                    ),
+                    child: Text("$_btntxt")),
+              ),
+            ),
             Spacer(),
             Row(
               children: [
@@ -181,12 +206,12 @@ class _VoteState extends State<Vote> {
                                   )
                                   .closed
                                   .then((value) => {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Dashboard()),
-                                            (r) => false)
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Dashboard()),
+                                        )
                                       }),
                             },
                           );

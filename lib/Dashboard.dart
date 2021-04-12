@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:evmflutter/FingerprintAuth.dart';
 import 'package:evmflutter/ViewResult.dart';
 import 'package:evmflutter/Vote.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dashboard"),
+        title: Text("Voter Section"),
       ),
       body: Center(
         child: Column(
@@ -37,34 +36,36 @@ class Dashboard extends StatelessWidget {
                       // final snackbar =
                       //     SnackBar(content: Text("Platform Not Supported"));
                       // ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => Vote()),
-                          (r) => false);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Vote(),
+                        ),
+                      );
                     }
                   },
                   child: Text("Vote"),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width / 1.5,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FingerprintAuthWidget(),
-                      ),
-                    );
-                  },
-                  child: Text("Fingerprint Auth"),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: Container(
+            //     width: MediaQuery.of(context).size.width / 1.5,
+            //     height: 50,
+            //     child: ElevatedButton(
+            //       onPressed: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //             builder: (context) => FingerprintAuthWidget(),
+            //           ),
+            //         );
+            //       },
+            //       child: Text("Fingerprint Auth"),
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
